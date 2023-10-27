@@ -13,4 +13,4 @@ def get_build_number():
         build_number = file_response.text.split('Build Number: ").concat("')[1].split('",')[0]
     except Exception:
         pass
-    return build_number
+    return int(build_number)
