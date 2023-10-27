@@ -15,3 +15,6 @@ def get_build_number():
         pass
         
     return int(build_number)
+
+discord_build_number = get_build_number()
+print(discord_build_number)
