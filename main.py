@@ -5,14 +5,13 @@ import time
 
 
 def get_build_number():
-    build_number = 240884
+    build_number = 253927
     try:
-        login_response = requests.get('https://discord.com/login')
-        file = 'https://discord.com/assets/' + re.compile(r"assets/+([a-z0-9]+)\.js").findall(login_response.text)[-2] + '.js'
+        file = 'https://discord.com/assets/sentry.45a9e80f852893c9e895.js'
         file_response = requests.get(file)
-        build_number = file_response.text.split('Build Number: ").concat("')[1].split('",')[0]
-    except Exception:
-        pass
+        build_number = file_response.text.split('buildNumber",(t="')[1].split('"')[0]
+    except Exception as e:
+        print(e)
         
     return int(build_number)
 
