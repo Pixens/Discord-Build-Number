@@ -11,7 +11,7 @@ def get_build_number():
         file_response = requests.get(file)
         build_number = file_response.text.split('buildNumber",(t="')[1].split('"')[0]
     except Exception as e:
-        print(e)
+        pass
         
     return int(build_number)
 
