@@ -4,16 +4,18 @@ import json
 import time
 
 
+#Credits to https://github.com/itschasa for this.
 def get_build_number():
-    build_number = 253927
     try:
-        file = 'https://discord.com/assets/sentry.45a9e80f852893c9e895.js'
-        file_response = requests.get(file)
-        build_number = file_response.text.split('buildNumber",(t="')[1].split('"')[0]
-    except Exception as e:
-        pass
-        
-    return int(build_number)
+        login_page_request = requests.get('https://discord.com/login', headers={"Accept-Encoding": "identity"})
+        login_page = login_page_request.text
+        build_url = 'https://discord.com/assets/' + re.compile(r'assets/(sentry\.\w+)\.js').findall(login_page)[0] + '.js'
+        build_request = requests.get(build_url, headers={"Accept-Encoding": "identity"})
+        build_nums = re.findall(r'buildNumber\D+(\d+)"', build_request.text)
+        return int(build_nums[0])
+    except Exception:
+        return 256231
+
 
 discord_build_number = get_build_number()
 print(discord_build_number)
