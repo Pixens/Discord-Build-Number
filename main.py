@@ -1,4 +1,4 @@
-import requests
+import tls_client
 
 
 headers = {
@@ -19,9 +19,11 @@ headers = {
 
 def get_build_number():
     try:
-        build_url = "https://discord.com/assets/84471.60c6151c70426311ebdb.js"
-        response = requests.get(build_url, headers=headers)
+        session = tls_client.Session(client_identifier="chrome_124")
+        build_url = "https://discord.com/assets/84471.3244a3093dadec43fc23.js"
+        response = session.get(build_url, headers=headers)
         build_number = response.text.split('"buildNumber",(_="')[1].split('"')[0]
+        session.close()
         return build_number
     except Exception:
         return 289814
